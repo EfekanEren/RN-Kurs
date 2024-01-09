@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, Button, View } from 'react-native';
+import Quote from './components/Quote';
 
 const data = [
   {text: 'Guten Tag',
@@ -23,9 +24,7 @@ if(prevIndex < 0) prevIndex = data.length - 1;
     // JSX --> UI
     <View style={styles.container}>
       
-      <Text>{quote.text}</Text>
-      <Text>&mdash; {quote.author}</Text>
-      
+      <Quote text={quote.text} author={quote.author}/>
       <Button title="Nächstes Zitat"
         onPress={() => setIndex((index + 1) % data.length)}></Button>
       
