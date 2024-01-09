@@ -1,12 +1,48 @@
+import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, Button, View } from 'react-native';
+
+const data = [
+  {text: 'Guten Tag',
+  author: 'Thomas'},
+  {text: 'Guten Abend',
+  author: 'Max'},
+  {text: 'Gute Nacht',
+  author: 'Jonas'}
+];
 
 export default function App() {
+
+const [index, setIndex] = useState(0);
+const quote = data[index];
+
+let prevIndex = index - 1;
+if(prevIndex < 0) prevIndex = data.length - 1;
+
   return (
+    // JSX --> UI
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      
+      <Text>{quote.text}</Text>
+      <Text>&mdash; {quote.author}</Text>
+      
+      <Button title="Nächstes Zitat"
+        onPress={() => setIndex((index + 1) % data.length)}></Button>
+      
+      <Button title="Voriges Zitat"
+        onPress={() => setIndex((prevIndex)) }></Button>
+      
       <StatusBar style="auto" />
+    
     </View>
+
+
+
+/*   const useStateArray = useState(0);
+  const index = useStateArray[0];
+  const quote = data[index];
+  const setIndex = useStateArray[1]; */
+
   );
 }
 
