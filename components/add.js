@@ -1,19 +1,47 @@
 import { useState } from 'react';
-import { StyleSheet, View, Button, Text, TextInput, number, TouchableOpacity } from 'react-native';
+import { Modal, StyleSheet, View, Button, Text, TextInput, number, TouchableOpacity, Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MaterialIcons } from '@expo/vector-icons';
 
-export default function Add({ onClose, text }) {
+export default function Add({ onClose, visible }) {
   const [quote, setQuote] = useState('');
   const [author, setAuthor] = useState('');
+
+  const incorrectInputAlert = () => {
+    Alert.alert(
+      'Eingabe Überprüfen',
+      'Geben Sie bitte ein Zitat und den jeweiligen Autoren an',
+      [
+        {
+          text: 'Ok',
+          style: 'default',
+        }
+      ]
+    )
+  }
+
+  const inputSavedAlert = () => {
+    Alert.alert(
+      'Erfolg',
+      'Ihr Zitat wurde gespeichert',
+      [
+        {
+          text: 'Ok',
+          style: 'default',
+        }
+      ]
+    )
+  }
 
   const saveQuote = () => {
     if (quote) {
       AsyncStorage.setItem('zitat', quote);
       setQuote('');
-      alert('Zitat gespeichert');
+      inputSavedAlert();
+      cancelQuote(); /* Dies ist die Funktion, die normalerweise für den Abbruch-Button verwendet wird.
+                      Wird hier jedoch auch aufgerufen, um nach dem speichern die Modal-Ansicht zu schließen. */
     } else {
-      alert('Bitte ausfüllen');
+      incorrectInputAlert();
     }
 };
 
@@ -25,6 +53,7 @@ const showQuote = () => AsyncStorage.getItem('zitat')
   
 return (
 
+<Modal visible={visible} animationType='slide'>
 <View>
 <Text style={styles.header}>Neues Zitat</Text>
 
@@ -51,12 +80,19 @@ return (
 </TouchableOpacity>
 
 </View>
+</Modal>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    top: 278,
   },
   input: {
     height: 40,
@@ -65,18 +101,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     padding: 10,
-    bottom: 20
+    top: 300,
+    left: 90,
   },
-    header: {
-      fontSize: 18,
-      fontWeight: 'bold',
-      textAlign: 'center',
-      bottom: 35
-    },
     saveQuote: {
       position: 'absolute',
-      top: 110,
-      left: 28,
+      top: 450,
+      left: 118,
       backgroundColor: '#ffde00',
       borderWidth: 0,
       borderRadius: 5,
@@ -92,8 +123,8 @@ const styles = StyleSheet.create({
     },
     cancelQuote: {
       position: 'absolute',
-      top: 110,
-      left: 138,
+      top: 450,
+      left: 230,
       backgroundColor: '#ffde00',
       borderWidth: 0,
       borderRadius: 5,

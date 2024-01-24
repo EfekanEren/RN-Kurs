@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
   },
   nextText: {
     color: 'black',
+    fontWeight: '600',
     fontSize: 14
   },
   addQuote: {
