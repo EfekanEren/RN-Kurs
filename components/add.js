@@ -51,7 +51,7 @@ return (
 </TouchableOpacity>
 
 <TouchableOpacity style={styles.cancelQuote} onPress={cancelQuote}>
-  <Text style={styles.CancelQuoteText} ><MaterialIcons name="cancel" size={18} color="black" /></Text>
+  <Text style={styles.CancelQuoteText} ><MaterialIcons name="cancel" size={20} color="black" /></Text>
 </TouchableOpacity>
 
 </View>
@@ -62,6 +62,9 @@ return (
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: '1'
   },
   header: {
     fontSize: 24,
@@ -70,47 +73,46 @@ const styles = StyleSheet.create({
     top: 278,
   },
   input: {
-    height: 40,
-    width: 200,
-    margin: 5,
+    height: 60,
+    width: 300,
+    margin: 10,
     borderWidth: 1,
     borderRadius: 5,
     padding: 10,
-    top: 300,
-    left: 90,
+    top: 295, // Adjust as needed
+    alignSelf: 'center', // Add this line
   },
     saveQuote: {
       position: 'absolute',
-      top: 450,
-      left: 118,
+      top: 510,
+      alignSelf: 'center',
+      textAlign: 'center',
       backgroundColor: '#ffde00',
       borderWidth: 0,
       borderRadius: 5,
       borderColor: 'black',
-      height: 30,
-      width: 100
+      height: 40,
+      width: 200
     },
     SaveQuoteText: {
       fontSize: 14,
-      top: 6.5,
       fontWeight: '600',
       textAlign: 'center',
+      top: 11
     },
     cancelQuote: {
       position: 'absolute',
-      top: 450,
-      left: 230,
+      top: 100,
+      right: 30,
       backgroundColor: '#ffde00',
       borderWidth: 0,
       borderRadius: 5,
       borderColor: 'black',
-      height: 30,
-      width: 35
+      height: 50,
+      width: 50
     },
     CancelQuoteText: {
-      fontSize: 14,
-      top: 6.5,
-      fontWeight: '400',
+      top: 15.5,
       textAlign: 'center',
     },
 });
