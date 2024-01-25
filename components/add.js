@@ -1,12 +1,16 @@
 import { useState } from 'react';
 import { Alerts } from './alerts';
-import { Modal, StyleSheet, View, Button, Text, TextInput, number, TouchableOpacity, Alert} from 'react-native';
+import { Modal, StyleSheet, View, Button, Text, TextInput, number, TouchableOpacity, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MaterialIcons } from '@expo/vector-icons';
 
 export default function Add({ onClose, visible }) {
   const [quote, setQuote] = useState('');
   const [author, setAuthor] = useState('');
+
+  const handlePress = () => {
+    Keyboard.dismiss();
+  };
 
   const saveQuote = () => {
     if (quote) {
@@ -24,38 +28,41 @@ const showQuote = () => AsyncStorage.getItem('zitat')
 
   const cancelQuote = () => {
     onClose();
-  } 
+  }
   
-return (
+  return (
+    <KeyboardAvoidingView behavior="height" style={styles.container}>
+      <Modal visible={visible} animationType='slide'>
+        <TouchableWithoutFeedback onPress={handlePress}>
+          <View style={styles.innerContainer}>
+            <Text style={styles.header}>Neues Zitat</Text>
 
-<Modal visible={visible} animationType='slide'>
-<View>
-<Text style={styles.header}>Neues Zitat</Text>
+            <TextInput
+              value={quote}
+              multiline
+              style={[styles.input, styles.contentInput]}
+              onChangeText={(text) => setQuote(text)}
+              placeholder="Zitat hier eingeben"
+            />
 
-<TextInput
-  value={quote}
-  style={styles.input}
-  onChangeText={(text) => setQuote(text)}
-  placeholder="Zitat hier eingeben"
-/>
+            <TextInput
+              value={author}
+              style={styles.input}
+              onChangeText={(author) => setAuthor(author)}
+              placeholder="Autor Name"
+            />
 
-<TextInput
-  value={author}
-  style={styles.input}
-  onChangeText={(author) => setAuthor(author)}
-  placeholder="Autor Name"
-/>
+            <TouchableOpacity style={styles.saveQuote} onPress={saveQuote}>
+              <Text style={styles.SaveQuoteText} >Speichern</Text>
+            </TouchableOpacity>
 
-<TouchableOpacity style={styles.saveQuote} onPress={saveQuote}>
-  <Text style={styles.SaveQuoteText} >Speichern</Text>
-</TouchableOpacity>
-
-<TouchableOpacity style={styles.cancelQuote} onPress={cancelQuote}>
-  <Text style={styles.CancelQuoteText} ><MaterialIcons name="cancel" size={20} color="black" /></Text>
-</TouchableOpacity>
-
-</View>
-</Modal>
+            <TouchableOpacity style={styles.cancelQuote} onPress={cancelQuote}>
+              <Text style={styles.CancelQuoteText} ><MaterialIcons name="cancel" size={20} color="black" /></Text>
+            </TouchableOpacity>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -70,17 +77,21 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
-    top: 278,
+    top: 200,
   },
   input: {
     height: 60,
-    width: 300,
+    width: 270,
     margin: 10,
     borderWidth: 1,
     borderRadius: 5,
     padding: 10,
-    top: 295, // Adjust as needed
-    alignSelf: 'center', // Add this line
+    top: 215,
+    alignSelf: 'center'
+  },
+  contentInput: {
+    height: 150,
+    width: 300
   },
     saveQuote: {
       position: 'absolute',
@@ -108,11 +119,11 @@ const styles = StyleSheet.create({
       borderWidth: 0,
       borderRadius: 5,
       borderColor: 'black',
-      height: 50,
-      width: 50
+      height: 40,
+      width: 40
     },
     CancelQuoteText: {
-      top: 15.5,
+      top: 11,
       textAlign: 'center',
     },
 });

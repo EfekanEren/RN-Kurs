@@ -32,6 +32,11 @@ if(prevIndex < 0) prevIndex = data.length - 1;
     // JSX --> UI
     <View style={styles.container}>
 
+      <Image
+        source={require('./assets/DEWEZET.png')}
+        style={styles.logo}
+      />
+
       {isAddVisible && <Add onClose={toggleAddVisibility} />}
       
       <TouchableOpacity style={styles.addQuote} onPress={toggleAddVisibility}>
@@ -62,6 +67,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  logo: {
+    width: 65, // Passen Sie die Breite nach Bedarf an
+    height: 65, // Passen Sie die Höhe nach Bedarf an
+    position: 'absolute',
+    alignSelf: 'center',
+    top: 85
   },
   dewezet: {
     fontSize: 26,
