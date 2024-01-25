@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Alerts } from './alerts';
 import { Modal, StyleSheet, View, Button, Text, TextInput, number, TouchableOpacity, Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -7,41 +8,15 @@ export default function Add({ onClose, visible }) {
   const [quote, setQuote] = useState('');
   const [author, setAuthor] = useState('');
 
-  const incorrectInputAlert = () => {
-    Alert.alert(
-      'Eingabe Überprüfen',
-      'Geben Sie bitte ein Zitat und den jeweiligen Autoren an',
-      [
-        {
-          text: 'Ok',
-          style: 'default',
-        }
-      ]
-    )
-  }
-
-  const inputSavedAlert = () => {
-    Alert.alert(
-      'Erfolg',
-      'Ihr Zitat wurde gespeichert',
-      [
-        {
-          text: 'Ok',
-          style: 'default',
-        }
-      ]
-    )
-  }
-
   const saveQuote = () => {
     if (quote) {
       AsyncStorage.setItem('zitat', quote);
       setQuote('');
-      inputSavedAlert();
+      Alerts.inputSavedAlert();
       cancelQuote(); /* Dies ist die Funktion, die normalerweise für den Abbruch-Button verwendet wird.
                       Wird hier jedoch auch aufgerufen, um nach dem speichern die Modal-Ansicht zu schließen. */
     } else {
-      incorrectInputAlert();
+      Alerts.incorrectInputAlert();
     }
 };
 

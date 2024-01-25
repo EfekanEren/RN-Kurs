@@ -4,7 +4,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image, StyleSheet, Text, Button, Pressable, View, TouchableOpacity, TextInput, onChangeText, onChangeNumber, text, number} from 'react-native';
 import Add from './components/add';
 import Quote from './components/quote';
-import AddQuote from './components/add';
 
 const data = [
   {text: '"Das Schönste, was wir erleben können, ist das Geheimnisvolle."',
